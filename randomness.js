@@ -285,7 +285,7 @@ function addPlayer() {
 function getSequence(player = null) {
     const sequence = [];
     for (let i = 0; i < sequenceLength; i++) {
-        const cardMethod = getCardMethod(player.name);
+        const cardMethod = getCardMethod(player ? player.name : null);
         if (player) {
             player.chips -= cardMethod.price;
             tablePot += cardMethod.price;
