@@ -503,8 +503,8 @@ function startSimulation() {
         const currentCard = grid[row][col];
         // Helper to get card at (r, c) with wrapping columns, but only if row >= 0
         function getCard(r, c) {
+            if (c < 0) { c = c + sequenceLength; r -= 1; }
             if (r < 0) return null;
-            c = ((c % sequenceLength) + sequenceLength) % sequenceLength;
             return grid[r][c];
         }
 
