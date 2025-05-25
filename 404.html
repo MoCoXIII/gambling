@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>404 Not Found</title>
+    <meta charset="UTF-8">
+    <script>
+        function levenshteinDistance(a, b) {
+            const m = a.length;
+            const n = b.length;
+            const d = Array(m + 1).fill(0).map(() => Array(n + 1).fill(0));
+
+            for (let i = 0; i <= m; i++) {
+                d[i][0] = i;
+            }
+            for (let j = 0; j <= n; j++) {
+                d[0][j] = j;
+            }
+
+            for (let i = 1; i <= m; i++) {
+                for (let j = 1; j <= n; j++) {
+                    const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+                    d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+                }
+            }
+
+            return d[m][n];
+        }
+
+        function findClosestPage(url) {
+            const pages = ['randomness'];
+            let closestPage = null;
+            let minDistance = Infinity;
+
+            pages.forEach((page) => {
+                const distance = levenshteinDistance(url, page);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestPage = page;
+                }
+            });
+
+            return closestPage;
+        }
+
+        const url = window.location.pathname.substring(1); // remove leading slash
+        const closestPage = findClosestPage(url);
+        window.location.href = `/${closestPage}.html`;
+    </script>
+</head>
+
+<body>
+    <h1>404 Not Found</h1>
+    <p>Redirecting to closest page...</p>
+</body>
+
+</html>
