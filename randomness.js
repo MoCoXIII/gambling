@@ -299,7 +299,7 @@ function getSequence(player = null) {
 /**
  * Prompts the user to select a card drawing method and returns the chosen method.
  * This function is intended to be used as part of a player's sequence of card drawing methods.
- * @returns {Array} The selected card drawing method as an Array [method, probability].
+ * @returns {Array} The selected card drawing method.
  */
 function getCardMethod(name = null) {
     // Sort cardMethods by ascending probability
@@ -327,7 +327,6 @@ function getCardMethod(name = null) {
         const idx = parseInt(choice, 10) - 1;
         if (idx >= 0 && idx < sortedMethods.length) {
             const method = sortedMethods[idx];
-            // Return [method, probability] as specified
             return method;
         }
         alert('Invalid choice. Please enter a valid number.');
@@ -393,8 +392,9 @@ function updatePotDisplay() {
 }
 
 function startGameUI() {
-    players.forEach(player => {
+    players.filter(player => player.enabled).forEach(player => {
         if (player.sequence.length === 0) { player.sequence = getSequence(player); }
+        renderPlayers(true);
     });
     gameStarted = true;
     // Hide add player button
