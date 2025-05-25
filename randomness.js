@@ -1,7 +1,7 @@
 let x = 1;
 let y = 2;
 let tablePot = 0;
-let casino = 0;
+let casino = localStorage.getItem('casino') || 0;
 let defaultChips = 100;
 
 function getPriceFromProbability(probability) {
@@ -530,6 +530,7 @@ function startSimulation() {
                 if (list.every((card, i) => matches(card, sequence[i]))) {
                     player.chips += Math.floor(tablePot / 2);
                     casino += Math.floor(tablePot / 2);
+                    localStorage.setItem('casino', casino);
                     tablePot = 0;
                     players.forEach(p => {
                         p.sequence = [];
