@@ -240,7 +240,7 @@ function renderPlayers(gameStarted = false) {
         updateBtn.textContent = 'Update Sequence';
         updateBtn.style.marginRight = '8px';
         updateBtn.onclick = () => {
-            let sequence = getSequence();
+            let sequence = getSequence(player);
             if (sequence) {
                 player.sequence = sequence;
                 savePlayers(players);
@@ -528,20 +528,19 @@ function startSimulation() {
             const sequence = player.sequence;
             Object.values(patterns).filter(list => list.length !== 0).forEach(list => {
                 if (list.every((card, i) => matches(card, sequence[i]))) {
-                    player.chips += Math.floor(tablePot / 2);
-                    casino += Math.floor(tablePot / 2);
-                    localStorage.setItem('casino', casino);
-                    tablePot = 0;
-                    players.forEach(p => {
-                        p.sequence = [];
-                    })
-                    updatePotDisplay();
                     updateTable();
-                    savePlayers(players);
                     renderPlayers(true);
                     running = false; // Stop the game
                     setTimeout(() => {
                         alert(`${player.name} wins with sequence: ${list.map(c => `${c.rank} of ${c.suit}`).join(', ')}`);
+                        player.chips += Math.floor(tablePot / 2);
+                        tablePot = 0;
+                        casino += Math.floor(tablePot / 2);
+                        localStorage.setItem('casino', casino);
+                        players.forEach(p => {
+                            p.sequence = [];
+                        });
+                        savePlayers(players);
                         window.location.reload(); // Reload the page to reset the game
                     }, 0);
                 }
