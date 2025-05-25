@@ -529,7 +529,6 @@ function startSimulation() {
             Object.values(patterns).filter(list => list.length !== 0).forEach(list => {
                 if (list.every((card, i) => matches(card, sequence[i]))) {
                     updateTable();
-                    renderPlayers(true);
                     running = false; // Stop the game
                     setTimeout(() => {
                         alert(`${player.name} wins with sequence: ${list.map(c => `${c.rank} of ${c.suit}`).join(', ')}`);
@@ -541,7 +540,7 @@ function startSimulation() {
                             p.sequence = [];
                         });
                         savePlayers(players);
-                        window.location.reload(); // Reload the page to reset the game
+                        renderPlayers(true);
                     }, 0);
                 }
             })
