@@ -531,10 +531,10 @@ function startSimulation() {
                     updateTable();
                     running = false; // Stop the game
                     setTimeout(() => {
-                        alert(`${player.name} wins with sequence: ${list.map(c => `${c.rank} of ${c.suit}`).join(', ')}`);
-                        player.chips += Math.floor(tablePot / 2);
-                        tablePot = 0;
-                        casino += Math.floor(tablePot / 2);
+                        alert(`${player.name} wins with sequence: ${pattern.map(c => `${c.rank} of ${c.suit}`).join(', ')}`);
+                        player.chips += parseInt(tablePot * 0.9);
+                        casino += parseInt(tablePot * 0.1);
+                        tablePot = 0; updatePotDisplay();
                         localStorage.setItem('casino', casino);
                         players.forEach(p => {
                             p.sequence = [];
