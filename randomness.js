@@ -523,11 +523,11 @@ function startSimulation() {
                 : [],
         };
 
-        players.forEach(player => {
-            if (!player.enabled) return; // Skip disabled players
-            const sequence = player.sequence;
-            Object.values(patterns).filter(list => list.length !== 0).forEach(list => {
-                if (list.every((card, i) => matches(card, sequence[i]))) {
+        Object.values(patterns).filter(pattern => pattern.length !== 0).forEach(pattern => {
+            players.filter(player => player.enabled).forEach(player => {
+                if (!running) return;
+                const sequence = player.sequence;
+                if (pattern.every((card, i) => matches(card, sequence[i]))) {
                     updateTable();
                     running = false; // Stop the game
                     setTimeout(() => {
@@ -543,7 +543,7 @@ function startSimulation() {
                         renderPlayers(true);
                     }, 0);
                 }
-            })
+            });
         });
     }
 
